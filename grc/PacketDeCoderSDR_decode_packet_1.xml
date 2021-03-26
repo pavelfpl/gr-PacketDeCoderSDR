@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<block>
+  <name>decode_packet_1</name>
+  <key>PacketDeCoderSDR_decode_packet_1</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.decode_packet_1($decodeHeader, $packetLength, $dataType, $dataPresentation, $filename)</make>
+  <param>
+    <name>Decode Header</name>
+    <key>decodeHeader</key>
+    <value>True</value>
+    <type>bool</type>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+  </param>
+  <param>
+    <name>Packet Length</name>
+    <key>packetLength</key>
+    <value>64</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Data Type</name>
+    <key>dataType</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>Packed</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>Unpacked</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+    <name>Data Presentation</name>
+    <key>dataPresentation</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>Forward PMT message</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>File Save</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+   <name>File Name</name>
+   <key>filename</key>
+   <value></value>
+   <type>file_save</type>
+  </param>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>out_pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

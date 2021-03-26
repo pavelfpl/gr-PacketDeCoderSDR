@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<block>
+  <name>build_packet_1</name>
+  <key>PacketDeCoderSDR_build_packet_1</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.build_packet_1($appendHeader, $packetLength, $dataType, $dataFrom, $filename)</make>
+  <param>
+    <name>Append Header</name>
+    <key>appendHeader</key>
+    <value>True</value>
+    <type>bool</type>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+  </param>
+  <param>
+    <name>Packet Length</name>
+    <key>packetLength</key>
+    <value>64</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Data Type</name>
+    <key>dataType</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>Packed</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>Unpacked</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+    <name>Data From</name>
+    <key>dataFrom</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>Random Generator</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>File Source</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+   <name>File Name</name>
+   <key>filename</key>
+   <value></value>
+   <type>file_open</type>
+  </param>
+    <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>stat_pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+  <source>
+    <name>out_pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+  
+</block>

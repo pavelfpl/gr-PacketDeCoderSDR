@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<block>
+  <name>burst_fsk_time_sync_c_plus</name>
+  <key>PacketDeCoderSDR_burst_fsk_time_sync_c_plus</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.burst_fsk_time_sync_c_plus($sample_rate, $sps, $upsample_rate, $n_offsets,$n_freq_offset)</make>
+  <param>
+    <name>Sample Rate</name>
+    <key>sample_rate</key>
+    <value>samp_rate</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Samples per Symbol (float)</name>
+    <key>sps</key>
+    <value>8</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Upsample Ratio (Sps est)</name>
+    <key>upsample_rate</key>
+    <value>100.0</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>N Timing Offsets</name>
+    <key>n_offsets</key>
+    <value>8</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Coarse Freq Sync</name>
+    <key>n_freq_offset</key>
+    <value>False</value>
+    <type>bool</type>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+  </param>
+  <sink>
+    <name>fpdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>fpdus_out</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

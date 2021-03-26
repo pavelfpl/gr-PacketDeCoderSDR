@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<block>
+  <name>de_scrambler_additive</name>
+  <key>PacketDeCoderSDR_de_scrambler_additive</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.de_scrambler_additive($seed, $mask, $regLength, $bits_per_byte, $byteAppendOrder)</make>
+  <param>
+    <name>Scrambler seed</name>
+    <key>seed</key>
+    <value>0xFF</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Scrambler mask</name>
+    <key>mask</key>
+    <value>0xA9</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>LFSR length</name>
+    <key>regLength</key>
+    <value>8</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Bits per byte</name>
+    <key>bits_per_byte</key>
+    <value>8</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Byte append order</name>
+    <key>byteAppendOrder</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>MSB first</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>LSB first</name>
+      <key>1</key>
+    </option>
+  </param>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>out_pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

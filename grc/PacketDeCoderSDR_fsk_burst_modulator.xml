@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<block>
+  <name>fsk_burst_modulator</name>
+  <key>PacketDeCoderSDR_fsk_burst_modulator</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.fsk_burst_modulator($fskType, $sps, $sensitivity, $dev, $sampRate, $taps)</make>
+  <param>
+    <name>FSK type</name>
+    <key>fskType</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>FSK (simple)</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>FSK (CMP)</name>
+      <key>1</key>
+    </option>
+   <option>
+      <name>GFSK</name>
+      <key>2</key>
+   </option>
+   <option>
+      <name>MSK</name>
+      <key>3</key>
+   </option>
+   <option>
+      <name>GMSK</name>
+      <key>4</key>
+    </option>
+  </param>
+  <param>
+    <name>Samples Per Symbols</name>
+    <key>sps</key>
+    <value>8</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Sensitivity</name>
+    <key>sensitivity</key>
+    <value>0.1963495405</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Deviation (FSK simple)</name>
+    <key>dev</key>
+    <value>12.5e3</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>SampleRate (FSK simple)</name>
+    <key>sampRate</key>
+    <value>100e3</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>FIR Filter Taps</name>
+    <key>taps</key>
+    <value>[0.000003984201397,0.000013787809353,0.000044041806845,0.000129852662229,0.000353388538458,0.000887707590789,0.002058274431450,0.004405066779438,0.008701970082519,0.015867136102758,0.026705172029971,0.041486622997972,0.059488999027626,0.078737407290814,0.096192548368404,0.108471993725238,0.112904093109483,0.108471993725238,0.096192548368404,0.078737407290814,0.059488999027626,0.041486622997972,0.026705172029971,0.015867136102758,0.008701970082519,0.004405066779438,0.002058274431450,0.000887707590789,0.000353388538458,0.000129852662229,0.000044041806845,0.000013787809353,0.000003984201397]</value>
+    <type>float_vector</type>
+  </param>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>cfpdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

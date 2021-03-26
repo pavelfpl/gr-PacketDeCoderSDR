@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<block>
+  <name>build_packet_test_b</name>
+  <key>PacketDeCoderSDR_build_packet_test_b</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.build_packet_test_b($sps, $tx_id)</make>
+  <param>
+    <name>Samples per symbol</name>
+    <key>sps</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>TX ID</name>
+    <key>tx_id</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>generate</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

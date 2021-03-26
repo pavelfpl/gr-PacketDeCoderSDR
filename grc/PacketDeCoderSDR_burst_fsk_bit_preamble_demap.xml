@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<block>
+  <name>burst_fsk_bit_preamble_demap</name>
+  <key>PacketDeCoderSDR_burst_fsk_bit_preamble_demap</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.burst_fsk_bit_preamble_demap($preamble_bits, $frameAlign, $frameSkip, $frameBlockSize, $algorithm, $section, $shapeSoftBits)</make>
+  <param>
+    <name>Preamble Bits</name>
+    <key>preamble_bits</key>
+    <value>[0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0]</value>
+    <type>int_vector</type>
+  </param>
+  <param>
+    <name>Frame Align</name>
+    <key>frameAlign</key>
+    <value>False</value>
+    <type>bool</type>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+  </param>
+  <param>
+    <name>Frame Skip</name>
+    <key>frameSkip</key>
+    <value>96</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Frame Block Size</name>
+    <key>frameBlockSize</key>
+    <value>0</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Used algorithm</name>
+    <key>algorithm</key>
+    <value>1</value>
+    <type>int</type>
+    <option>
+      <name>FFT CONV (xcorr)</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>Recursive search</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+    <name>N Search (0...length/N) </name>
+    <key>section</key>
+    <value>4</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Shape Soft Bits [-1;1]</name>
+    <key>shapeSoftBits</key>
+    <value>False</value>
+    <type>bool</type>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+  </param>
+  <sink>
+    <name>fpdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>fpdus_soft</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+  <source>
+    <name>fpdus_hard</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>

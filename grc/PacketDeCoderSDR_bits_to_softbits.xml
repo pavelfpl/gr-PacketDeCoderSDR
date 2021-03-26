@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<block>
+  <name>bits_to_softbits</name>
+  <key>PacketDeCoderSDR_bits_to_softbits</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.bits_to_softbits($reverse, $introduceErrors, $errorOffset)</make>
+   <param>
+    <name>Bits to SoftBits (char -> float)</name>
+    <key>reverse</key>
+    <value>False</value>
+    <type>bool</type>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+  </param>
+  <param>
+    <name>Introduce errors</name>
+    <key>introduceErrors</key>
+    <value>False</value>
+    <type>bool</type>
+    <option>
+      <name>True</name>
+      <key>True</key>
+    </option>
+    <option>
+      <name>False</name>
+      <key>False</key>
+    </option>
+  </param>
+  <param>
+    <name>Error offset</name>
+    <key>errorOffset</key>
+    <value>15</value>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>fcpdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source> 
+</block>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<block>
+  <name>decoder_packet_test_b</name>
+  <key>PacketDeCoderSDR_decoder_packet_test_b</key>
+  <category>PacketDeCoderSDR</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.decoder_packet_test_b()</make>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>message</type>
+    <optional>1</optional>
+  </source>
+</block>
