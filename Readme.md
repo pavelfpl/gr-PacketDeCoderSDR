@@ -8,6 +8,7 @@ https://github.com/osh/gr-eventstream
 https://github.com/gr-vt/gr-mapper  
 https://github.com/osh/gr-pyqt  
 https://github.com/gr-vt/gr-burst  
+https://github.com/sandialabs/gr-pdu_utils (optional)
 
 > Extension of original **gr-burst**:
 > https://github.com/pavelfpl/gr-burst
