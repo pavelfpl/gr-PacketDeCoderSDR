@@ -8,6 +8,7 @@ https://github.com/osh/gr-eventstream
 https://github.com/gr-vt/gr-mapper  
 https://github.com/osh/gr-pyqt  
 https://github.com/gr-vt/gr-burst  
+https://github.com/sandialabs/gr-pdu_utils (optional)
 
 > Extension of original **gr-burst**:
 > https://github.com/pavelfpl/gr-burst
@@ -31,7 +32,7 @@ sudo ldconfig
 cd gr3.7
 source gr3.7-source.env
 cd ..
-cd gr-gsSDR
+cd gr-PacketDeCoderSDR
 mkdir build 
 cd build
 cmake ../ -Wno-dev -DCMAKE_INSTALL_PREFIX=~/gr3.7.13.4 
