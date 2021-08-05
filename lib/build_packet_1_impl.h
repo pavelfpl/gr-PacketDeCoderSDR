@@ -45,8 +45,10 @@ namespace gr {
        
        void fileOpen(const char *filename);
        void fileClose();
+       
+       std::vector<unsigned char> packet_bytes; 
      public:
-      build_packet_1_impl(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename);
+      build_packet_1_impl(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename, std::vector<unsigned char> packet_bytes_h);
       ~build_packet_1_impl();
 
       // Where all the action really happens

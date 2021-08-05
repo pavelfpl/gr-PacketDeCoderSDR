@@ -4,7 +4,7 @@
   <key>PacketDeCoderSDR_build_packet_1</key>
   <category>PacketDeCoderSDR</category>
   <import>import PacketDeCoderSDR</import>
-  <make>PacketDeCoderSDR.build_packet_1($appendHeader, $packetLength, $dataType, $dataFrom, $filename)</make>
+  <make>PacketDeCoderSDR.build_packet_1($appendHeader, $packetLength, $dataType, $dataFrom, $filename, $packet_bytes_h)</make>
   <param>
     <name>Append Header</name>
     <key>appendHeader</key>
@@ -52,6 +52,10 @@
       <name>File Source</name>
       <key>1</key>
     </option>
+    <option>
+      <name>CMD Line</name>
+      <key>2</key>
+    </option>
   </param>
   <param>
    <name>File Name</name>
@@ -59,7 +63,13 @@
    <value></value>
    <type>file_open</type>
   </param>
-    <sink>
+  <param>
+    <name>Packet Bytes</name>
+    <key>packet_bytes_h</key>
+    <value>[0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07]</value>
+    <type>int_vector</type>
+  </param>
+  <sink>
     <name>pdus</name>
     <type>message</type>
     <optional>1</optional>

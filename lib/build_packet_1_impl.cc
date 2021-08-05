@@ -48,6 +48,7 @@
 // --------------
 #define CONST_DATA_FROM_RANDOM_GENERATOR 0
 #define CONST_DATA_FROM_FILE 1
+#define CONST_DATA_CMD_LINE 2
 
 #define CONST_DATA_PACKED 0 
 #define CONST_DATA_UNPACKED 1
@@ -73,17 +74,17 @@ namespace gr {
     using namespace std;
     
     build_packet_1::sptr
-    build_packet_1::make(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename)
+    build_packet_1::make(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename, std::vector<unsigned char> packet_bytes_h)
     {
       return gnuradio::get_initial_sptr
-        (new build_packet_1_impl(appendHeader, packetLength, dataType, dataFrom, filename));
+        (new build_packet_1_impl(appendHeader, packetLength, dataType, dataFrom, filename, packet_bytes_h));
     }
 
     /*
      * The private constructor ...
      * ---------------------------
      */
-    build_packet_1_impl::build_packet_1_impl(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename)
+    build_packet_1_impl::build_packet_1_impl(bool appendHeader, int packetLength, int dataType, int dataFrom, const char *filename, std::vector<unsigned char> packet_bytes_h)
       : gr::block("build_packet_1",
               gr::io_signature::make(0, 0, 0), 	 // gr::io_signature::make(<+MIN_IN+>, <+MAX_IN+>, sizeof(<+ITYPE+>)),
               gr::io_signature::make(0, 0, 0)),  // gr::io_signature::make(<+MIN_OUT+>, <+MAX_OUT+>, sizeof(<+OTYPE+>)))
@@ -99,6 +100,10 @@ namespace gr {
 	  if(m_dataFrom == CONST_DATA_FROM_FILE){
 	     fileOpen(filename);
 	  }
+	  
+	  // Set packet bytes uchar ...
+	  // --------------------------
+	  packet_bytes = packet_bytes_h;
 	  
 	  // Initialize random seed ...
 	  // --------------------------
@@ -254,7 +259,7 @@ namespace gr {
 		
 		// pmt ...
 		// -------
-	        meta = pmt::dict_add(meta, pmt::string_to_symbol("f_errors"), pmt::from_long(CONST_FILE_READ_OK));
+        meta = pmt::dict_add(meta, pmt::string_to_symbol("f_errors"), pmt::from_long(CONST_FILE_READ_OK));
 		meta = pmt::dict_add(meta, pmt::string_to_symbol("f_transfer"), pmt::from_long(CONST_TRANSFER_IN_PROGRESS));
 		message_port_pub(out_port_0,meta);
 	    }else{
@@ -273,6 +278,16 @@ namespace gr {
 	    message_port_pub(out_port_0,meta);
 	    return;
 	  }
+	}
+	
+    // Append payload bytes / option 2 - RANDOM FROM CMD LINE ...
+	// ----------------------------------------------------------
+	if(m_dataFrom == CONST_DATA_CMD_LINE){
+       data_packet.resize(packet_bytes.size() + offset);  
+        
+	   for(int i = offset;i < packet_bytes.size() + offset;i++){
+	       data_packet[i] = packet_bytes[i]; 	
+	   }
 	}
 	
 	// Generate header of the packet / POST  ...

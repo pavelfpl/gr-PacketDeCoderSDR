@@ -46,7 +46,7 @@ namespace gr {
        * class. PacketDeCoderSDR::build_packet_1::make is the public interface for
        * creating new instances.
        */
-      static sptr make(bool appendHeader=true, int packetLength=64, int dataType=0, int dataFrom=0, const char *filename=NULL);
+      static sptr make(bool appendHeader=true, int packetLength=64, int dataType=0, int dataFrom=0, const char *filename=NULL,std::vector<unsigned char> packet_bytes_h = {});
     };
 
   } // namespace PacketDeCoderSDR
