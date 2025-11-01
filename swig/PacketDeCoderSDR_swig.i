@@ -17,6 +17,8 @@
 #include "PacketDeCoderSDR/decode_packet_1.h"
 #include "PacketDeCoderSDR/de_scrambler_additive.h"
 #include "PacketDeCoderSDR/fsk_burst_modulator.h"
+#include "PacketDeCoderSDR/build_packet_physical_source.h"
+#include "PacketDeCoderSDR/build_packet_physical_sink.h"
 %}
 
 
@@ -38,3 +40,7 @@ GR_SWIG_BLOCK_MAGIC2(PacketDeCoderSDR, decode_packet_1);
 GR_SWIG_BLOCK_MAGIC2(PacketDeCoderSDR, de_scrambler_additive);
 %include "PacketDeCoderSDR/fsk_burst_modulator.h"
 GR_SWIG_BLOCK_MAGIC2(PacketDeCoderSDR, fsk_burst_modulator);
+%include "PacketDeCoderSDR/build_packet_physical_source.h"
+GR_SWIG_BLOCK_MAGIC2(PacketDeCoderSDR, build_packet_physical_source);
+%include "PacketDeCoderSDR/build_packet_physical_sink.h"
+GR_SWIG_BLOCK_MAGIC2(PacketDeCoderSDR, build_packet_physical_sink);

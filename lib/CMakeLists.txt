@@ -27,6 +27,7 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND PacketDeCoderSDR_sources
     util.cc
+    fifo_buffer_packet.cc
     build_packet_test_b_impl.cc
     decoder_packet_test_b_impl.cc
     burst_fsk_time_sync_c_plus_impl.cc
@@ -36,6 +37,8 @@ list(APPEND PacketDeCoderSDR_sources
     decode_packet_1_impl.cc
     de_scrambler_additive_impl.cc
     fsk_burst_modulator_impl.cc
+    build_packet_physical_source_impl.cc
+    build_packet_physical_sink_impl.cc
 )
 
 set(PacketDeCoderSDR_sources "${PacketDeCoderSDR_sources}" PARENT_SCOPE)

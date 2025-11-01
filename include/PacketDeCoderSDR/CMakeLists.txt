@@ -30,5 +30,7 @@ install(FILES
     bits_to_softbits.h
     decode_packet_1.h
     de_scrambler_additive.h
-    fsk_burst_modulator.h DESTINATION include/PacketDeCoderSDR
+    fsk_burst_modulator.h
+    build_packet_physical_source.h
+    build_packet_physical_sink.h DESTINATION include/PacketDeCoderSDR
 )

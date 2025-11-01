@@ -26,5 +26,7 @@ install(FILES
     PacketDeCoderSDR_bits_to_softbits.xml
     PacketDeCoderSDR_decode_packet_1.xml
     PacketDeCoderSDR_de_scrambler_additive.xml
-    PacketDeCoderSDR_fsk_burst_modulator.xml DESTINATION share/gnuradio/grc/blocks
+    PacketDeCoderSDR_fsk_burst_modulator.xml
+    PacketDeCoderSDR_build_packet_physical_source.xml
+    PacketDeCoderSDR_build_packet_physical_sink.xml DESTINATION share/gnuradio/grc/blocks
 )

@@ -22,7 +22,7 @@
 #define INCLUDED_PACKETDECODERSDR_FSK_BURST_MODULATOR_IMPL_H
 
 #include <PacketDeCoderSDR/fsk_burst_modulator.h>
-#include <pdu_utils/constants.h>
+// #include <pdu_utils/constants.h>
 #include <gnuradio/filter/fir_filter.h>
 #include <gnuradio/fxpt.h>
 

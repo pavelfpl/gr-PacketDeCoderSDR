@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<block>
+  <name>build_packet_physical_sink</name>
+  <key>PacketDeCoderSDR_build_packet_physical_sink</key>
+  <category>[PacketDeCoderSDR]</category>
+  <import>import PacketDeCoderSDR</import>
+  <make>PacketDeCoderSDR.build_packet_physical_sink($deviceSource, $deviceOption, $payloadLength, $dataType, $bufferLength, $packeGapSleep)</make>
+  <param>
+    <name>Packet Source</name>
+    <key>deviceSource</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>CANBus</name>
+      <key>0</key>
+    </option>
+  </param>
+  <param>
+   <name>Device Option</name>
+   <key>deviceOption</key>
+   <value>can_dev:can0,can_id:0x123"</value>
+   <type>string</type>
+  </param>
+  <param>
+    <name>Payload Length</name>
+    <key>payloadLength</key>
+    <value>144</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Data Type</name>
+    <key>dataType</key>
+    <value>0</value>
+    <type>int</type>
+    <option>
+      <name>Packed</name>
+      <key>0</key>
+    </option>
+    <option>
+      <name>Unpacked</name>
+      <key>1</key>
+    </option>
+  </param>
+  <param>
+    <name>Buffer FIFO Length</name>
+    <key>bufferLength</key>
+    <value>256</value>
+    <type>int</type>
+  </param>
+  <param>
+    <name>Packet Sleep Gap [ns]</name>
+    <key>packeGapSleep</key>
+    <value>1000000</value>
+    <type>int</type>
+  </param>
+  <sink>
+    <name>pdus</name>
+    <type>message</type>
+    <optional>1</optional>
+  </sink>
+</block>
