@@ -2,7 +2,7 @@
 <block>
   <name>build_packet_physical_source</name>
   <key>PacketDeCoderSDR_build_packet_physical_source</key>
-  <category>[PacketDeCoderSDR]</category>
+  <category>PacketDeCoderSDR</category>
   <import>import PacketDeCoderSDR</import>
   <make>PacketDeCoderSDR.build_packet_physical_source($deviceSource, $deviceOption, $payloadLength, $dataType, $bufferLength)</make>
   <param>
@@ -18,7 +18,7 @@
   <param>
    <name>Device Option</name>
    <key>deviceOption</key>
-   <value>can_dev:can0,can_id:0x123"</value>
+   <value>can_dev:can0,can_id:0x123</value>
    <type>string</type>
   </param>
   <param>
