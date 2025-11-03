@@ -66,15 +66,12 @@ namespace gr {
             if ((pos = arr_s_[i].find(key_s_)) != string::npos){
                 size_t pos_delim = arr_s_[i].find(delimiter_)+delimiter_.length();
                 if(pos_delim != string::npos){
-                ok = true;
-                return strip_str(arr_s_[i].substr(pos_delim, string::npos));
+                   ok = true;
+                   return strip_str(arr_s_[i].substr(pos_delim, string::npos));
                 }else{
-                    ok = false;
-                    return string();
+                   ok = false;
+                   return string();
                 }
-            }else{
-                ok = false;
-                return string();
             }
         }
 
