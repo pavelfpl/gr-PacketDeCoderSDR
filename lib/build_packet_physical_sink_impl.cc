@@ -56,7 +56,7 @@
 #define CONST_SPARE_BYTE 0x00
 
 #define CAN_BUS_DEVICE 0x00
-#define CAN_PACKET_LEN 8
+#define CAN_PACKET_LEN_DEFAULT 8
 
 #define CONST_DATA_PACKED 0 
 #define CONST_DATA_UNPACKED 1
@@ -69,7 +69,8 @@ namespace gr {
     // Define static variables ...
     // ---------------------------
     fifo_buffer_packet build_packet_physical_sink_impl::s_fifo;
-
+    
+    
     build_packet_physical_sink::sptr
     build_packet_physical_sink::make(int deviceSource, const std::string &deviceOption, int payloadLength, int dataType, int bufferLength, uint32_t packeGapSleep)
     {
@@ -155,7 +156,7 @@ namespace gr {
                 
                can_frame c_frame;
                c_frame.can_id = can_params.can_id; 
-               c_frame.can_dlc = CAN_PACKET_LEN;
+               c_frame.can_dlc = CAN_PACKET_LEN_DEFAULT;
                
                // Send CANBus header ...
                *(uint16_t*)&c_frame.data[0] = CONST_SYNC_WORD;
@@ -167,16 +168,29 @@ namespace gr {
                // Set sleep interval ... 
                nanosleep(&request, &remaining);
                
-               // Send payload divided to the CANBus packets ...
-               for (int i=0;i<payload_vector.size();i++){
-                   c_frame.data[i % CAN_PACKET_LEN] = payload_vector[i];
-                   if((i % CAN_PACKET_LEN) == CAN_PACKET_LEN-1){
+               // Sent payload (frames of 8 bytes) ...
+               int rem_bytes = payload_vector.size() % CAN_PACKET_LEN_DEFAULT;
+               int full_bytes = payload_vector.size() - rem_bytes;
+               
+               for (int i=0;i < full_bytes;i++){
+                   c_frame.data[i % CAN_PACKET_LEN_DEFAULT] = payload_vector[i];
+                   if((i % CAN_PACKET_LEN_DEFAULT) == CAN_PACKET_LEN_DEFAULT-1){
                       bus.send(&c_frame);
                       nanosleep(&request, &remaining);
                    }
                }
+               
+               // Sent rest of bytes ... 
+               if(rem_bytes!=0){
+                  // Adjust CAN frame size ... 
+                  c_frame.can_dlc = rem_bytes;
+                  for (int i=full_bytes; i < payload_vector.size();i++){
+                      c_frame.data[i % rem_bytes] = payload_vector[i];
+                  }
+                  bus.send(&c_frame);
+               }
             }else{
-                // Set the same sleep interval as for packets gap ...
+                // Set the same sleep interval as packets gap ...
                 nanosleep(&request, &remaining);
             }
             
@@ -357,7 +371,7 @@ namespace gr {
             
             if(payloadCrcOK && packetOk){
                data_payload.assign(payloadSize, 0x00);
-               copy(&data_packed[offset+CONST_PAYLOAD_OFFSET], &data_packed[offset + payloadSize + CONST_PAYLOAD_OFFSET-1], data_payload.begin());
+               copy(&data_packed[offset+CONST_PAYLOAD_OFFSET], &data_packed[offset + payloadSize + CONST_PAYLOAD_OFFSET], data_payload.begin());
                // Add to packet FIFO ...
                gr_storage_packet packet_wr(payload_crc32, data_payload);
                         

@@ -54,7 +54,7 @@
 #define CONST_SYNC_WORD 0x1337
 #define CONST_SPARE_BYTE 0x00
 
-#define CAN_PACKET_LEN 8
+#define CAN_PACKET_LEN_DEFAULT 8
 #define CAN_BUS_DEVICE 0x00
 
 // Simple packet handler state machine
@@ -144,6 +144,7 @@ namespace gr {
     // canBus_packet_thread_handler - handles incomming CANBus packets
     void build_packet_physical_source_impl::canBus_packet_thread_handler(struct canBusParamsTx can_params){
         
+        int current_frame_len = 0;
         uint8_t payload_len = 0x00;
         uint32_t crc32_check = 0;
 
@@ -156,10 +157,12 @@ namespace gr {
         CanBus bus(can_params.canDev.c_str());
                 
         if((fd = bus.connect()) < 0){
-           cout << "Unable to open CANBus device: "<< can_params.canDev  << endl;
+           cout << "Unable to open CANBus device: " << can_params.canDev << endl;        
            m_thread_joined = true;
            return;
         }
+        
+        cout << "CANBus device opened succesfully: "<< can_params.canDev << endl;         
         
         struct pollfd pfds[2] = {0};
 
@@ -169,7 +172,6 @@ namespace gr {
         pfds[0].fd = pipes[0];
         pfds[0].events = POLLIN; 
         
-
         pfds[1].fd = fd;
         pfds[1].events = POLLIN;
         
@@ -193,10 +195,14 @@ namespace gr {
                   CanFrame frame;
                   bus.read(&frame); 
                   
-                  // Check incomming CAN packet structure and id
-                  if(frame.length() != CAN_PACKET_LEN || frame.id() != can_params.can_id){
+                  // Check incomming CAN packet structure and id,
+                  // CAN frame length is no more checked: frame.length() != CAN_PACKET_LEN
+                  if(frame.id() != can_params.can_id){
                      continue;   
                   }
+                  
+                  // Set current frame length ...
+                  current_frame_len = frame.length();
                   
                   // Push back frame bytes to std vector ...
                   for (int i = 0; i < frame.length(); i++) {
@@ -207,24 +213,23 @@ namespace gr {
             
             // -- State - PACKET_HEADER_SEARCH --
             if (state == PACKET_HEADER_SEARCH){
-            // Check for packet header
-            if(*(uint16_t*)&can_data_packet[0] == CONST_SYNC_WORD){
-                // Check payload len and spare byte	      
-                if(can_data_packet[2] == m_payloadLength && can_data_packet[3] == CONST_SPARE_BYTE){
-                   // Set current payload len
-                   payload_len = can_data_packet[2];
-                   // Set CRC32 to be later calculated based on payload content
-                   crc32_check = *(uint32_t*)&can_data_packet[4];
-                   // Move to state PACKET_PAYLOAD_GET
-                   state = PACKET_PAYLOAD_GET;
+                // Check for packet header
+                if((current_frame_len == CAN_PACKET_LEN_DEFAULT) && (*(uint16_t*)&can_data_packet[0] == CONST_SYNC_WORD)){
+                    // Check payload len and spare byte	      
+                    if(can_data_packet[2] == m_payloadLength && can_data_packet[3] == CONST_SPARE_BYTE){
+                      // Set current payload len
+                      payload_len = can_data_packet[2];
+                      // Set CRC32 to be later calculated based on payload content
+                      crc32_check = *(uint32_t*)&can_data_packet[4];
+                      // Move to state PACKET_PAYLOAD_GET
+                      state = PACKET_PAYLOAD_GET;
+                    }
                 }
-            }
             // -- State - PACKET_PAYLOAD_GET -- 
             } else if (state == PACKET_PAYLOAD_GET){ 	
                 payload_vector.insert(payload_vector.end(), can_data_packet.begin(), can_data_packet.end());
-                payload_len -= CAN_PACKET_LEN;
 
-                if(payload_vector.size() == m_payloadLength){
+                if(payload_vector.size() == payload_len){
                    // Check CRC32 ...
                    if(gr::digital::crc32(&payload_vector[0], payload_vector.size()) == crc32_check){
                       // Add payload to the FIFO  and finally clear payload_vector ...
@@ -248,6 +253,8 @@ namespace gr {
         }
         
         // Disconnect from socket
+        cout << "CANBus thread is about to be terminated" <<endl; 
+        
         bus.disconnect();
 
     }
@@ -343,7 +350,7 @@ namespace gr {
         vector<unsigned char> data_packet(packetLength, 0x00); 				 // Set default values ...
 
         // Generate header of the packet - sync word, payload_length, CRC32 header
-        *(uint16_t*)&data_packet[0] = 0x1337;       						 // Header == 0x1337 [2 bytes]; aka CONST_HEADER_PRELOAD_BYTES
+        *(uint16_t*)&data_packet[0] = CONST_SYNC_WORD;       				 // Header == 0x1337 [2 bytes]; aka CONST_HEADER_PRELOAD_BYTES
         *(uint16_t*)&data_packet[2] = m_payloadLength;				         // [2 bytes]; aka CONST_HEADER_PACKET_SIZE
         *(uint32_t*)&data_packet[4] = gr::digital::crc32(&data_packet[0],4); // [4 bytes]; aka CONST_HEADER_CRC32 
         offset+=8; 

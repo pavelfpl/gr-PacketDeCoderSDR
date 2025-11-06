@@ -46,7 +46,7 @@ namespace gr {
        * class. PacketDeCoderSDR::build_packet_physical_source::make is the public interface for
        * creating new instances.
        */
-      static sptr make(int deviceSource = 0, const std::string &deviceOption = "can_dev:can0,can_id:0x123", int payloadLength = 144, int dataType = 0, int bufferLength = 256);
+      static sptr make(int deviceSource = 0, const std::string &deviceOption = "can_dev:can0,can_id:0x123", int payloadLength = 132, int dataType = 0, int bufferLength = 256);
     };
 
   } // namespace PacketDeCoderSDR

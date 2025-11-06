@@ -24,7 +24,7 @@
   <param>
     <name>Payload Length</name>
     <key>payloadLength</key>
-    <value>144</value>
+    <value>132</value>
     <type>int</type>
   </param>
   <param>

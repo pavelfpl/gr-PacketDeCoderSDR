@@ -8,13 +8,13 @@ fifo_buffer_packet::fifo_buffer_packet(size_t bufferSize_){
     m_fifoBufferStorage = new gr_storage_packet[bufferSize_];
 
     // Init FIFO ...
-    fifo_init(m_fifoBufferStorage, bufferSize_+1);
+    fifo_init(m_fifoBufferStorage, bufferSize_);
 }
 
 // fifo_buffer destructor [public]
 // -------------------------------
 fifo_buffer_packet::~fifo_buffer_packet(){
-
+    
     if(m_fifoBufferStorage != 0){
         delete[] m_fifoBufferStorage;
         m_fifoBufferStorage = 0;
@@ -44,7 +44,7 @@ void fifo_buffer_packet::fifo_changeSize(size_t bufferSize_){
     m_fifoBufferStorage = new gr_storage_packet[bufferSize_];
 
     // Init FIFO ...
-    fifo_init(m_fifoBufferStorage, bufferSize_+1);
+    fifo_init(m_fifoBufferStorage, bufferSize_);
 
 }
 
@@ -55,7 +55,7 @@ uint fifo_buffer_packet::fifo_write_storage(const gr_storage_packet *buff_storag
   uint j = 0;
   const gr_storage_packet *p_gr = buff_storage;
 
-  gr::thread::scoped_lock lock(fp_mutex);   // shared resources ...
+  // gr::thread::scoped_lock lock(fp_mutex);   // shared resources ...
 
   for(j=0;j<nStorage;j++){
         if(m_fifo.fifoHead+1 == m_fifo.fifoTail || ((m_fifo.fifoHead+1 == m_fifo.fifoSize) && (m_fifo.fifoTail==0))){
@@ -78,7 +78,7 @@ uint fifo_buffer_packet::fifo_read_storage(gr_storage_packet *buff_storage, cons
 
   uint j = 0;
 
-  gr::thread::scoped_lock lock(fp_mutex);   // shared resources ...
+  // gr::thread::scoped_lock lock(fp_mutex);   // shared resources ...
 
   for(j=0;j<nStorage;j++){
         if(m_fifo.fifoHead == m_fifo.fifoTail ){
